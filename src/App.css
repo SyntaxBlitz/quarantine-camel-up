@@ -68,6 +68,36 @@
   width: 100%;
 }
 
+.Pyramid {
+  position: absolute;
+  width: 36%;
+  top: 22%;
+  left: 32%;
+}
+
+.Pyramid img {
+  width: 100%;
+  position: absolute;
+  transform-origin: bottom center;
+}
+
+.Pyramid .front {
+  transform: translateY(50%) rotateX(-51deg);
+}
+
+.Pyramid .left {
+  transform: translateX(-50%) rotateZ(90deg) rotateX(-51deg);
+}
+
+.Pyramid .right {
+  transform: translateX(50%) rotateZ(-90deg) rotateX(-51deg);
+}
+
+/* don't think this one shows anymore now that the pyramid is taller than it used to be */
+.Pyramid .back {
+  transform: translateY(-50%) rotateX(-129deg);
+}
+
 /* .spot-15-pos {
   top: 0;
   left: 0;

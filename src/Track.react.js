@@ -1,6 +1,7 @@
 import React from 'react';
 import Spot from './Spot.react';
 import Camels from './Camels.react';
+import Pyramid from './Pyramid.react';
 
 function Track() {
   return (
@@ -9,6 +10,7 @@ function Track() {
         spot => <Spot key={spot} spot={spot} />
       )}
       <Camels />
+      <Pyramid />
     </div>
   );
 }
