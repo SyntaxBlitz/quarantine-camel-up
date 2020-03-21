@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import BaseBoard from './BaseBoard.react';
+import Track from './Track.react';
 
 const getStyles = rotateZ => ({
-  transform: `perspective(1000px) translateZ(-500px) translateY(-550px) rotateX(25deg) rotateZ(${rotateZ}deg)`,
+  transform:// `perspective(1000px) ` +
+  `translateZ(-500px) translateY(-550px) rotateX(25deg) rotateZ(${rotateZ}deg)`,
 });
 
 function GameBoard() {
@@ -19,9 +21,10 @@ function GameBoard() {
   }, [setRotateZ]);
 
   return (
-    <div className="GameBoard1">
+    <div className="GameBoardContainer">
       <div className="GameBoard" style={getStyles(rotateZ)}>
         <BaseBoard />
+        <Track />
       </div>
     </div>
   );

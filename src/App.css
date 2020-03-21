@@ -1,20 +1,162 @@
-.GameBoard1 {
+.GameBoardContainer {
   margin: 0 auto; 
   width: 720px;
+  position: relative;
+  perspective: 1000px;
+
 }
 
 .GameBoard {
-  /* width: 720px; */
-  /* perspective: 40px; */
-  /* transform: perspective(800px) rotateX(15deg) translate3d(0px, 0px, 00px); */
-  transform: perspective(1000px) translateZ(-500px) translateY(-500px) rotateX(20deg) rotateZ(30deg);
-  /* transform-origin: top center; */
+  height: 1375px;
+  transform-style: preserve-3d;
+
 }
 
 .BaseBoard {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
 }
 
 .BaseBoard img {
   width: 100%;
+}
+
+.Track {
+  position: absolute;
+  top: 40.75%;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 40.75%);
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.Spot {
+  position: absolute;
+  /* background-color: rgba(0, 0, 255, 0.4); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-weight: bold;
+  font-size: 72pt;
+
+  transform: translateZ(50px) rotateX(-70deg);
+}
+
+.Spot.spot-15 {
+  top: 0;
+  left: 0;
+  width: 18.5%;
+  height: 20.5%;
+}
+
+.Spot.spot-16 {
+  top: 0;
+  left: 18.5%;
+  width: 20.75%;
+  height: 20.5%;
+}
+
+.Spot.spot-1 {
+  top: 0;
+  left: 39.25%;
+  width: 21%;
+  height: 20%;
+}
+
+.Spot.spot-2 {
+  top: 0;
+  left: 60.25%;
+  width: 21%;
+  height: 20%;
+}
+
+.Spot.spot-3 {
+  top: 0;
+  left: 81.25%;
+  width: 18.75%;
+  height: 20%;
+}
+
+.Spot.spot-4 {
+  top: 20%;
+  left: 81.25%;
+  width: 18.75%;
+  height: 19.5%;
+}
+
+.Spot.spot-5 {
+  top: 39.5%;
+  left: 81.25%;
+  width: 18.75%;
+  height: 19.5%;
+}
+
+.Spot.spot-6 {
+  top: 59%;
+  left: 81.25%;
+  width: 18.75%;
+  height: 20%;
+}
+
+.Spot.spot-7 {
+  top: 79%;
+  left: 81%;
+  width: 19%;
+  height: 21%;
+}
+
+.Spot.spot-8 {
+  top: 79%;
+  left: 60.5%;
+  width: 20.5%;
+  height: 21%;
+}
+
+.Spot.spot-9 {
+  top: 79%;
+  left: 38.5%;
+  width: 22%;
+  height: 21%;
+}
+
+.Spot.spot-10 {
+  top: 79%;
+  left: 18.5%;
+  width: 20%;
+  height: 21%;
+}
+
+.Spot.spot-11 {
+  top: 79%;
+  left: 0;
+  width: 18.5%;
+  height: 21%;
+}
+
+.Spot.spot-12 {
+  top: 59.75%;
+  left: 0;
+  width: 18.5%;
+  height: 19.25%;
+}
+
+.Spot.spot-13 {
+  top: 39.75%;
+  left: 0;
+  width: 18.5%;
+  height: 20%;
+}
+
+.Spot.spot-14 {
+  top: 20.5%;
+  left: 0;
+  width: 18.5%;
+  height: 19.25%;
+}
+
+.Camels {
+  position: absolute;
 }
