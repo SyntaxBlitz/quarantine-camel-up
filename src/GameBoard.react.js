@@ -2,27 +2,30 @@ import React, { useEffect, useState } from 'react';
 import BaseBoard from './BaseBoard.react';
 import Track from './Track.react';
 
-const getStyles = rotateZ => ({
-  transform:// `perspective(1000px) ` +
-  `translateZ(-500px) translateY(-550px) rotateX(25deg) rotateZ(${rotateZ}deg)`,
+const getStyles = rotates => ({
+  transform: `translateZ(-500px) translateY(-550px) rotateX(${rotates.x}deg) rotateZ(${rotates.z}deg)`,
 });
 
 function GameBoard() {
-  const [rotateZ, setRotateZ] = useState(0);
+  const [rotates, setRotates] = useState({ x: 30, z: 0 });
 
   useEffect(() => {
     window.onmousemove = e => {
       const percX = e.clientX / window.innerWidth;
       const percY = e.clientY / window.innerHeight;
-      // easy to rotate at the bottom of the screen, hard at the top.
-      // this is because most clickable stuff is on the top.
-      setRotateZ((30 * percX - 15) * percY);
+
+      setRotates({
+        x: percY * 20 + 25,
+        // easy to rotate at the bottom of the screen, hard at the top.
+        // this is because most clickable stuff is on the top.
+        z: (30 * percX - 15) * percY,
+      });
     };
-  }, [setRotateZ]);
+  }, [setRotates]);
 
   return (
     <div className="GameBoardContainer">
-      <div className="GameBoard" style={getStyles(rotateZ)}>
+      <div className="GameBoard" style={getStyles(rotates)}>
         <BaseBoard />
         <Track />
       </div>

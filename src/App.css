@@ -29,12 +29,10 @@
   left: 0;
   width: 100%;
   height: calc(100% - 40.75%);
-  background-color: rgba(255, 0, 0, 0.2);
 }
 
 .Spot {
   position: absolute;
-  /* background-color: rgba(0, 0, 255, 0.4); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,119 +40,272 @@
   font-weight: bold;
   font-size: 72pt;
 
-  transform: translateZ(50px) rotateX(-70deg);
+  transition: background-color 0.25s;
+  transform: translate3d(-50%, -50%, 1px);
 }
 
-.Spot.spot-15 {
+.Spot:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.Camels {
+  width: 100%;
+  height: 100%;
+}
+
+.Camel {
+  position: absolute;
+  width: 12%;
+  transform: translate3d(-50%, -50%, 26px) rotateX(-70deg);
+  transition: top 1s, left 1s;
+}
+
+.camel-y-offset {
+  transition: transform 1s;
+}
+
+.Camel img {
+  width: 100%;
+}
+
+/* .spot-15-pos {
   top: 0;
   left: 0;
+}
+
+.spot-15-size {
   width: 18.5%;
   height: 20.5%;
 }
 
-.Spot.spot-16 {
+.spot-16-pos {
   top: 0;
   left: 18.5%;
+}
+
+.spot-16-size {
   width: 20.75%;
   height: 20.5%;
 }
 
-.Spot.spot-1 {
+.spot-1-pos {
   top: 0;
   left: 39.25%;
+}
+
+.spot-1-size {
   width: 21%;
   height: 20%;
 }
 
-.Spot.spot-2 {
+.spot-2-pos {
   top: 0;
   left: 60.25%;
+}
+
+.spot-2-size {
   width: 21%;
   height: 20%;
 }
 
-.Spot.spot-3 {
+.spot-3-pos {
   top: 0;
   left: 81.25%;
+}
+
+.spot-3-size {
   width: 18.75%;
   height: 20%;
 }
 
-.Spot.spot-4 {
+.spot-4-pos {
   top: 20%;
   left: 81.25%;
+}
+
+.spot-4-size {
   width: 18.75%;
   height: 19.5%;
 }
 
-.Spot.spot-5 {
+.spot-5-pos {
   top: 39.5%;
   left: 81.25%;
+}
+
+.spot-5-size {
   width: 18.75%;
   height: 19.5%;
 }
 
-.Spot.spot-6 {
+.spot-6-pos {
   top: 59%;
   left: 81.25%;
+}
+
+.spot-6-size {
   width: 18.75%;
   height: 20%;
 }
 
-.Spot.spot-7 {
+.spot-7-pos {
   top: 79%;
   left: 81%;
+}
+
+.spot-7-size {
   width: 19%;
   height: 21%;
 }
 
-.Spot.spot-8 {
+.spot-8-pos {
   top: 79%;
   left: 60.5%;
+}
+
+.spot-8-size {
   width: 20.5%;
   height: 21%;
 }
 
-.Spot.spot-9 {
+.spot-9-pos {
   top: 79%;
   left: 38.5%;
+}
+
+.spot-9-size {
   width: 22%;
   height: 21%;
 }
 
-.Spot.spot-10 {
+.spot-10-pos {
   top: 79%;
   left: 18.5%;
+}
+
+.spot-10-size {
   width: 20%;
   height: 21%;
 }
 
-.Spot.spot-11 {
+.spot-11-pos {
   top: 79%;
   left: 0;
+}
+
+.spot-11-size {
   width: 18.5%;
   height: 21%;
 }
 
-.Spot.spot-12 {
+.spot-12-pos {
   top: 59.75%;
   left: 0;
+}
+
+.spot-12-size {
   width: 18.5%;
   height: 19.25%;
 }
 
-.Spot.spot-13 {
+.spot-13-pos {
   top: 39.75%;
   left: 0;
+}
+
+.spot-13-size {
   width: 18.5%;
   height: 20%;
 }
 
-.Spot.spot-14 {
+.spot-14-pos {
   top: 20.5%;
   left: 0;
+}
+
+.spot-14-size {
   width: 18.5%;
   height: 19.25%;
+} */
+
+.spot-15 {
+  top: calc(0% + 20.5% / 2);
+  left: calc(0% + 18.5% / 2);
+}
+
+.spot-16 {
+  top: calc(0% + 20.5% / 2);
+  left: calc(18.5% + 20.75% / 2);
+}
+
+.spot-1 {
+  top: calc(0% + 20% / 2);
+  left: calc(39.25% + 21% / 2);
+}
+
+.spot-2 {
+  top: calc(0% + 20% / 2);
+  left: calc(60.25% + 21% / 2);
+}
+
+.spot-3 {
+  top: calc(0% + 20% / 2);
+  left: calc(81.25% + 18.75% / 2);
+}
+
+.spot-4 {
+  top: calc(20% + 19.5% / 2);
+  left: calc(81.25% + 18.75% / 2);
+}
+
+.spot-5 {
+  top: calc(39.5% + 19.5% / 2);
+  left: calc(81.25% + 18.75% / 2);
+}
+
+.spot-6 {
+  top: calc(59% + 20% / 2);
+  left: calc(81.25% + 18.75% / 2);
+}
+
+.spot-7 {
+  top: calc(79% + 21% / 2);
+  left: calc(81% + 19% / 2);
+}
+
+.spot-8 {
+  top: calc(79% + 21% / 2);
+  left: calc(60.5% + 20.5% / 2);
+}
+
+.spot-9 {
+  top: calc(79% + 21% / 2);
+  left: calc(38.5% + 22% / 2);
+}
+
+.spot-10 {
+  top: calc(79% + 21% / 2);
+  left: calc(18.5% + 20% / 2);
+}
+
+.spot-11 {
+  top: calc(79% + 21% / 2);
+  left: calc(0% + 18.5% / 2);
+}
+
+.spot-12 {
+  top: calc(59.75% + 19.25% / 2);
+  left: calc(0% + 18.5% / 2);
+}
+
+.spot-13 {
+  top: calc(39.75% + 20% / 2);
+  left: calc(0% + 18.5% / 2);
+}
+
+.spot-14 {
+  top: calc(20.5% + 19.25% / 2);
+  left: calc(0% + 18.5% / 2);
 }
 
 .Camels {
