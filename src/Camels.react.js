@@ -3,11 +3,11 @@ import Camel from './Camel.react'
 
 function Camels() {
   const [ spots, setSpots ] = useState({
-    blue: { spot: 1, height: 0 },
-    yellow: { spot: 2, height: 0 },
+    blue: { spot: 7, height: 0 },
+    yellow: { spot: 3, height: 1 },
     orange: { spot: 3, height: 0 },
     white: { spot: 4, height: 0 },
-    green: { spot: 5, height: 0 },
+    green: { spot: 2, height: 0 },
   });
   window.setSpots = setSpots;
 

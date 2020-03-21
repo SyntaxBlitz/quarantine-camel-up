@@ -3,7 +3,7 @@ import BaseBoard from './BaseBoard.react';
 import Track from './Track.react';
 
 const getStyles = rotates => ({
-  transform: `translateZ(-500px) translateY(-550px) rotateX(${rotates.x}deg) rotateZ(${rotates.z}deg)`,
+  transform: `translateZ(-400px) translateY(-600px) rotateX(${rotates.x}deg) rotateZ(${rotates.z}deg)`,
 });
 
 function GameBoard() {

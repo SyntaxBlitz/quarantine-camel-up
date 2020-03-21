@@ -2,14 +2,12 @@
   margin: 0 auto; 
   width: 720px;
   position: relative;
-  perspective: 1000px;
-
+  perspective: 900px;
 }
 
 .GameBoard {
   height: 1375px;
   transform-style: preserve-3d;
-
 }
 
 .BaseBoard {
@@ -36,7 +34,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: rgba(0, 0, 0, 0.2);
   font-weight: bold;
   font-size: 72pt;
 
@@ -71,32 +69,62 @@
 .Pyramid {
   position: absolute;
   width: 36%;
-  top: 22%;
+  height: 36%;
+  top: 27%;
   left: 32%;
+  pointer-events: none;
+}
+
+.Pyramid .hidden-base {
+  /* background-color: black; */
+  position: absolute;
+  width: 100%;
+  height: 120%;
+  pointer-events: auto;
 }
 
 .Pyramid img {
   width: 100%;
   position: absolute;
   transform-origin: bottom center;
+  /* border: 10px solid black;
+  opacity: 0.2; */
+  transition: transform 0.25s;
 }
 
 .Pyramid .front {
-  transform: translateY(50%) rotateX(-51deg);
+  transform: translateY(25px) translateY(50%) rotateX(-51deg);
+}
+
+.Pyramid.hovered .front {
+  transform: translateZ(40px) translateY(25px) translateY(50%) rotateX(-51deg);
 }
 
 .Pyramid .left {
   transform: translateX(-50%) rotateZ(90deg) rotateX(-51deg);
 }
 
+.Pyramid.hovered .left {
+  transform: translateZ(40px) translateX(-50%) rotateZ(90deg) rotateX(-51deg);
+}
+
 .Pyramid .right {
   transform: translateX(50%) rotateZ(-90deg) rotateX(-51deg);
 }
 
-/* don't think this one shows anymore now that the pyramid is taller than it used to be */
-.Pyramid .back {
-  transform: translateY(-50%) rotateX(-129deg);
+.Pyramid.hovered .right {
+  transform: translateZ(40px) translateX(50%) rotateZ(-90deg) rotateX(-51deg);
 }
+
+/* don't think this one shows anymore now that the pyramid is taller than it used to be */
+/* .Pyramid .back {
+  transform: translateY(-50%) rotateX(-129deg);
+  transition: transform 0.25s;
+}
+
+.Pyramid:hover .back {
+  transform: translateZ(10px) translateY(-50%) rotateX(-129deg);
+} */
 
 /* .spot-15-pos {
   top: 0;
