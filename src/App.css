@@ -1,0 +1,20 @@
+.GameBoard1 {
+  margin: 0 auto; 
+  width: 720px;
+}
+
+.GameBoard {
+  /* width: 720px; */
+  /* perspective: 40px; */
+  /* transform: perspective(800px) rotateX(15deg) translate3d(0px, 0px, 00px); */
+  transform: perspective(1000px) translateZ(-500px) translateY(-500px) rotateX(20deg) rotateZ(30deg);
+  /* transform-origin: top center; */
+}
+
+.BaseBoard {
+  width: 100%;
+}
+
+.BaseBoard img {
+  width: 100%;
+}
