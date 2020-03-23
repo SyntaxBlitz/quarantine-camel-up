@@ -41,7 +41,7 @@
   transform: translate3d(-50%, -50%, 1px);
 }
 
-.TopButtons div:hover {
+.MyTurn .TopButtons div:hover {
   opacity: 1;
 }
 
@@ -70,7 +70,7 @@
   transform: translateZ(1px);
 }
 
-.Spot:hover {
+.MyTurn .Spot:hover {
   opacity: 1;
 }
 
@@ -191,6 +191,10 @@
   transition: opacity 0.5s, transform 0.25s;
 }
 
+.BetCardStack img.hidden {
+  opacity: 0;
+}
+
 .BetCardStack img.bet-value-2 {
   transform: translate3d(-50%, -50%, 5px);
 }
@@ -203,15 +207,15 @@
   transform: translate3d(-50%, -50%, 15px);
 }
 
-.BetCardStack:hover img.bet-value-2 {
+.MyTurn .BetCardStack:hover img.bet-value-2 {
   transform: translate3d(-50%, -50%, 10px);
 }
 
-.BetCardStack:hover img.bet-value-3 {
+.MyTurn .BetCardStack:hover img.bet-value-3 {
   transform: translate3d(-50%, -50%, 20px);
 }
 
-.BetCardStack:hover img.bet-value-5 {
+.MyTurn .BetCardStack:hover img.bet-value-5 {
   transform: translate3d(-50%, -50%, 30px);
 }
 
@@ -250,7 +254,7 @@
   transform: translateY(25px) translateY(50%) rotateX(-51deg);
 }
 
-.Pyramid.hovered .front {
+.MyTurn .Pyramid.hovered .front {
   transform: translateZ(40px) translateY(25px) translateY(50%) rotateX(-51deg);
 }
 
@@ -258,7 +262,7 @@
   transform: translateX(-50%) rotateZ(90deg) rotateX(-51deg);
 }
 
-.Pyramid.hovered .left {
+.MyTurn .Pyramid.hovered .left {
   transform: translateZ(40px) translateX(-50%) rotateZ(90deg) rotateX(-51deg);
 }
 
@@ -266,7 +270,7 @@
   transform: translateX(50%) rotateZ(-90deg) rotateX(-51deg);
 }
 
-.Pyramid.hovered .right {
+.MyTurn .Pyramid.hovered .right {
   transform: translateZ(40px) translateX(50%) rotateZ(-90deg) rotateX(-51deg);
 }
 

@@ -69,7 +69,7 @@ function App() {
 
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
-      <div className="App">
+      <div className={`App ${state.gameState.myTurn ? 'MyTurn' : ''}`}>
         <MyTray />
         <GameBoard />
       </div>

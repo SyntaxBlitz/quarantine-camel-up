@@ -4,8 +4,9 @@ const CamelContext = React.createContext();
 
 const initialState = {
   accessToken: null,
+  screen: 'ENTER_NAME',
+
   gameState: {
-    players: [],
     dice: {
       blue: null,
       green: null,
@@ -27,12 +28,14 @@ const initialState = {
       yellow: [ 2, 3, 5 ],
       white: [ 2, 3, 5 ],
     },
-    longTermRemaining: [ 'blue', 'green', 'orange', 'yellow', 'white' ],
   },
   viewState: {
     pyramidHidden: false,
     savedDice: [],
-    locked: false,
+  },
+  privateState: {
+    longTermRemaining: [ 'blue', 'green', 'orange', 'yellow', 'white' ],
+    myTurn: true,
   },
 };
 
@@ -58,14 +61,14 @@ const reducer = (state, action) => {
         },
       },
     }),
-
-    'VIEW_SET_LOCKED': (state, action) => ({
+    'SET_MY_TURN': (state, action) => ({
       ...state,
-      viewState: {
-        ...state.viewState,
-        locked: action.locked,
+      gameState: {
+        ...state.gameState,
+        myTurn: action.myTurn,
       },
     }),
+
     'VIEW_SET_PYRAMID_HIDDEN': (state, action) => ({
       ...state,
       viewState: {

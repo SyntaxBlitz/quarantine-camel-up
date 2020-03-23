@@ -53,9 +53,9 @@ function BetCardStack(props) {
 
   return (
     <div className={`BetCardStack ${props.color}`}>
-      <img src={getCard(props.color)(2)} className="bet-value-2" />
-      <img src={getCard(props.color)(3)} className="bet-value-3" />
-      <img src={getCard(props.color)(5)} className="bet-value-5" />
+      <img src={getCard(props.color)(2)} className={`bet-value-2 ${state.gameState.availableBets[props.color].includes(2) ? '' : 'hidden'}`} />
+      <img src={getCard(props.color)(3)} className={`bet-value-3 ${state.gameState.availableBets[props.color].includes(3) ? '' : 'hidden'}`} />
+      <img src={getCard(props.color)(5)} className={`bet-value-5 ${state.gameState.availableBets[props.color].includes(5) ? '' : 'hidden'}`} />
     </div>
   );
 }
