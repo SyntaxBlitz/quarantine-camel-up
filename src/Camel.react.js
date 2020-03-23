@@ -26,7 +26,7 @@ function Camel(props) {
   }
 
   return (
-    <div className={'Camel ' + `spot-${pos.spot}`}>
+    <div className={'Camel ' + `camel-spot-${pos.spot}`}>
       {/* think we just gotta hardcode this one */}
       <div className="camel-y-offset" style={{ transform: 'translateY(' + (-pos.height * 30) + 'px)' }}>
         <img src={getCamel(props.color)} />

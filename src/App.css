@@ -60,16 +60,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(0, 0, 0, 0.2);
   font-weight: bold;
   font-size: 72pt;
+  opacity: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
 
-  transition: background-color 0.25s;
-  transform: translate3d(-50%, -50%, 1px);
+  transition: opacity 0.25s;
+  transform: translateZ(1px);
 }
 
 .Spot:hover {
-  background-color: rgba(255, 0, 0, 0.2);
+  opacity: 1;
 }
 
 .Camels {
@@ -186,7 +188,7 @@
 .BetCardStack img {
   position: absolute;
   width: 110px;
-  transition: opacity 0.5s;
+  transition: opacity 0.5s, transform 0.25s;
 }
 
 .BetCardStack img.bet-value-2 {
@@ -199,6 +201,18 @@
 
 .BetCardStack img.bet-value-5 {
   transform: translate3d(-50%, -50%, 15px);
+}
+
+.BetCardStack:hover img.bet-value-2 {
+  transform: translate3d(-50%, -50%, 10px);
+}
+
+.BetCardStack:hover img.bet-value-3 {
+  transform: translate3d(-50%, -50%, 20px);
+}
+
+.BetCardStack:hover img.bet-value-5 {
+  transform: translate3d(-50%, -50%, 30px);
 }
 
 .Pyramid {
@@ -266,242 +280,194 @@
   transform: translateZ(10px) translateY(-50%) rotateX(-129deg);
 } */
 
-/* .spot-15-pos {
+.spot-15 {
   top: 0;
   left: 0;
-}
-
-.spot-15-size {
   width: 18.5%;
   height: 20.5%;
 }
 
-.spot-16-pos {
+.spot-16 {
   top: 0;
   left: 18.5%;
-}
-
-.spot-16-size {
   width: 20.75%;
   height: 20.5%;
 }
 
-.spot-1-pos {
+.spot-1 {
   top: 0;
   left: 39.25%;
-}
-
-.spot-1-size {
   width: 21%;
   height: 20%;
 }
 
-.spot-2-pos {
+.spot-2 {
   top: 0;
   left: 60.25%;
-}
-
-.spot-2-size {
   width: 21%;
   height: 20%;
 }
 
-.spot-3-pos {
+.spot-3 {
   top: 0;
   left: 81.25%;
-}
-
-.spot-3-size {
   width: 18.75%;
   height: 20%;
 }
 
-.spot-4-pos {
+.spot-4 {
   top: 20%;
   left: 81.25%;
-}
-
-.spot-4-size {
   width: 18.75%;
   height: 19.5%;
 }
 
-.spot-5-pos {
+.spot-5 {
   top: 39.5%;
   left: 81.25%;
-}
-
-.spot-5-size {
   width: 18.75%;
   height: 19.5%;
 }
 
-.spot-6-pos {
+.spot-6 {
   top: 59%;
   left: 81.25%;
-}
-
-.spot-6-size {
   width: 18.75%;
   height: 20%;
 }
 
-.spot-7-pos {
+.spot-7 {
   top: 79%;
   left: 81%;
-}
-
-.spot-7-size {
   width: 19%;
   height: 21%;
 }
 
-.spot-8-pos {
+.spot-8 {
   top: 79%;
   left: 60.5%;
-}
-
-.spot-8-size {
   width: 20.5%;
   height: 21%;
 }
 
-.spot-9-pos {
+.spot-9 {
   top: 79%;
   left: 38.5%;
-}
-
-.spot-9-size {
   width: 22%;
   height: 21%;
 }
 
-.spot-10-pos {
+.spot-10 {
   top: 79%;
   left: 18.5%;
-}
-
-.spot-10-size {
   width: 20%;
   height: 21%;
 }
 
-.spot-11-pos {
+.spot-11 {
   top: 79%;
   left: 0;
-}
-
-.spot-11-size {
   width: 18.5%;
   height: 21%;
 }
 
-.spot-12-pos {
+.spot-12 {
   top: 59.75%;
   left: 0;
-}
-
-.spot-12-size {
   width: 18.5%;
   height: 19.25%;
 }
 
-.spot-13-pos {
+.spot-13 {
   top: 39.75%;
   left: 0;
-}
-
-.spot-13-size {
   width: 18.5%;
   height: 20%;
 }
 
-.spot-14-pos {
+.spot-14 {
   top: 20.5%;
   left: 0;
-}
-
-.spot-14-size {
   width: 18.5%;
   height: 19.25%;
-} */
+}
 
-.spot-15 {
+.camel-spot-15 {
   top: calc(0% + 20.5% / 2);
   left: calc(0% + 18.5% / 2);
 }
 
-.spot-16 {
+.camel-spot-16 {
   top: calc(0% + 20.5% / 2);
   left: calc(18.5% + 20.75% / 2);
 }
 
-.spot-1 {
+.camel-spot-1 {
   top: calc(0% + 20% / 2);
   left: calc(39.25% + 21% / 2);
 }
 
-.spot-2 {
+.camel-spot-2 {
   top: calc(0% + 20% / 2);
   left: calc(60.25% + 21% / 2);
 }
 
-.spot-3 {
+.camel-spot-3 {
   top: calc(0% + 20% / 2);
   left: calc(81.25% + 18.75% / 2);
 }
 
-.spot-4 {
+.camel-spot-4 {
   top: calc(20% + 19.5% / 2);
   left: calc(81.25% + 18.75% / 2);
 }
 
-.spot-5 {
+.camel-spot-5 {
   top: calc(39.5% + 19.5% / 2);
   left: calc(81.25% + 18.75% / 2);
 }
 
-.spot-6 {
+.camel-spot-6 {
   top: calc(59% + 20% / 2);
   left: calc(81.25% + 18.75% / 2);
 }
 
-.spot-7 {
+.camel-spot-7 {
   top: calc(79% + 21% / 2);
   left: calc(81% + 19% / 2);
 }
 
-.spot-8 {
+.camel-spot-8 {
   top: calc(79% + 21% / 2);
   left: calc(60.5% + 20.5% / 2);
 }
 
-.spot-9 {
+.camel-spot-9 {
   top: calc(79% + 21% / 2);
   left: calc(38.5% + 22% / 2);
 }
 
-.spot-10 {
+.camel-spot-10 {
   top: calc(79% + 21% / 2);
   left: calc(18.5% + 20% / 2);
 }
 
-.spot-11 {
+.camel-spot-11 {
   top: calc(79% + 21% / 2);
   left: calc(0% + 18.5% / 2);
 }
 
-.spot-12 {
+.camel-spot-12 {
   top: calc(59.75% + 19.25% / 2);
   left: calc(0% + 18.5% / 2);
 }
 
-.spot-13 {
+.camel-spot-13 {
   top: calc(39.75% + 20% / 2);
   left: calc(0% + 18.5% / 2);
 }
 
-.spot-14 {
+.camel-spot-14 {
   top: calc(20.5% + 19.25% / 2);
   left: calc(0% + 18.5% / 2);
 }
