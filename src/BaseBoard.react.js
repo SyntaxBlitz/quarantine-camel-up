@@ -1,5 +1,5 @@
 import React from 'react';
-import game_board from './game_board.jpg';
+import game_board from './images/game_board.jpg';
 
 function BaseBoard() {
   return (
