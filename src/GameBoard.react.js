@@ -3,6 +3,7 @@ import BaseBoard from './BaseBoard.react';
 import Track from './Track.react';
 import Dice from './Dice.react';
 import BetCards from './BetCards.react';
+import TopButtons from './TopButtons.react';
 
 const getStyles = rotates => ({
   transform: `translateZ(-400px) translateY(-600px) rotateX(${rotates.x}deg) rotateZ(${rotates.z}deg)`,
@@ -29,6 +30,7 @@ function GameBoard() {
     <div className="GameBoardContainer">
       <div className="GameBoard" style={getStyles(rotates)}>
         <BaseBoard />
+        <TopButtons />
         <BetCards />
         <Dice />
         <Track />

@@ -20,6 +20,14 @@ const initialState = {
       yellow: null,
       white: null,
     },
+    availableBets: {
+      blue: [ 2, 3, 5 ],
+      green: [ 2, 3, 5 ],
+      orange: [ 2, 3, 5 ],
+      yellow: [ 2, 3, 5 ],
+      white: [ 2, 3, 5 ],
+    },
+    longTermRemaining: [ 'blue', 'green', 'orange', 'yellow', 'white' ],
   },
   viewState: {
     pyramidHidden: false,
