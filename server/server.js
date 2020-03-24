@@ -1,6 +1,6 @@
-import sleep from 'sleep-promise';
+const sleep = require('sleep-promise');
 
-const io = require('socket.io')(80);
+const io = require('socket.io')(3511);
 
 const state = {
   public: {
@@ -61,11 +61,11 @@ const roll = () => {
 };
 
 const initializeGameState = () => {
-  shuffle(Object.keys(state.public.camels)).forEach(camel => {
+  shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
     const spot = roll();
-    const height = Object.values(state.public.camels).map(c => c === null ? 0 : (c.spot === spot ? 1 : 0)).reduce((a, b) => a + b);
+    const height = Object.values(state.public.gameState.camels).map(c => c === null ? 0 : (c.spot === spot ? 1 : 0)).reduce((a, b) => a + b);
     
-    state.public.camels[camel] = {
+    state.public.gameState.camels[camel] = {
       spot,
       height,
     };
@@ -96,16 +96,16 @@ const initializeLeg = () => {
   state.public.viewState.savedDice = [];
 };
 
-const isPlayersTurn = id => turnOrder[state.private.playerTurn] === id && state.private.turnReady;
+const isPlayersTurn = id => state.private.turnOrder[state.private.playerTurn] === id && state.private.turnReady;
 
 const privateStateForId = id => {
   return {
     myTurn: isPlayersTurn(id),
     longTermRemaining: [ 'blue', 'green', 'orange', 'yellow', 'white' ].filter(
-      c => !private.longTermFirsts.some(bet => bet.id === id && bet.color === c)
-        && !private.longTermLasts.some(bet => bet.id === id && bet.color === c),
+      c => !state.private.longTermFirsts.some(bet => bet.id === id && bet.color === c)
+        && !state.private.longTermLasts.some(bet => bet.id === id && bet.color === c),
     ),
-    cash: idToCash[id],
+    cash: state.private.idToCash[id],
   };
 };
 
@@ -118,19 +118,24 @@ const addPerson = id => name => {
     return;
   }
 
+  const oldName = state.private.idToName[id];
   state.private.idToName[id] = name;
-  state.private.turnOrder.push(id);
 
-  // shuffle turn order?
+  if (oldName === undefined) {
+    state.private.turnOrder.push(id);
 
-  state.private.idToCash[id] = 3;
+    state.private.idToCash[id] = 3;
 
-  console.log('New player: ' + name + ', ' + id);
-  console.log('Now we have ' + Object.keys(state.private.idToSocket).length + ' players');
+    console.log('New player: ' + name + ', ' + id);
+    console.log('Now we have ' + state.private.turnOrder.length + ' players');
+  } else {
+    console.log(`${oldName} changed their name to ${name}`);
+  }
 };
 
 const startGame = () => {
   state.public.gameStarted = true;
+  shuffle(state.private.turnOrder);
   initializeGameState();
   nextTurn();
 
@@ -144,9 +149,9 @@ const broadcastState = () => {
 };
 
 const sendStateToSocket = id => {
-  state.private.idToSocket[id].emit('update', {
+  state.private.idToSocket[id].emit('UPDATE', {
     ...state.public,
-    privateState: privateStateForId(id);
+    privateState: privateStateForId(id),
   });
 };
 
@@ -173,7 +178,7 @@ const nextTurn = () => {
 
 io.on('connection', socket => {
   socket.on('REGISTER_SOCKET', ({ id }) => {
-    registerSocket();
+    registerSocket(socket)(id);
     sendStateToSocket(id);
   });
 
@@ -221,6 +226,8 @@ io.on('connection', socket => {
       // TODO spot 17
       await sleep(1000);
     }
+
+    // TODO grant a coin to the player (provisional?)
 
     // TODO oasis / mirage
 

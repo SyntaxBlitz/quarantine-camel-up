@@ -3,44 +3,13 @@ import React from 'react';
 const CamelContext = React.createContext();
 
 const initialState = {
-  accessToken: null,
-  screen: 'ENTER_NAME',
-
-  gameState: {
-    dice: {
-      blue: null,
-      green: null,
-      orange: null,
-      yellow: null,
-      white: null,
-    },
-    camels: {
-      blue: null,
-      green: null,
-      orange: null,
-      yellow: null,
-      white: null,
-    },
-    availableBets: {
-      blue: [ 2, 3, 5 ],
-      green: [ 2, 3, 5 ],
-      orange: [ 2, 3, 5 ],
-      yellow: [ 2, 3, 5 ],
-      white: [ 2, 3, 5 ],
-    },
-  },
-  viewState: {
-    pyramidHidden: false,
-    savedDice: [],
-  },
-  privateState: {
-    longTermRemaining: [ 'blue', 'green', 'orange', 'yellow', 'white' ],
-    myTurn: true,
-  },
+  gameStarted: false,
 };
 
 const reducer = (state, action) => {
   const handler = {
+    'SET_ENTIRE_STATE': (_, action) => action.newState,
+    
     'SET_CAMEL_POSITION': (state, action) => ({
       ...state,
       gameState: {
