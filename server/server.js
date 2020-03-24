@@ -22,6 +22,7 @@ const state = {
         yellow: null,
         white: null,
       },
+      camelPlacing: [], // redundant state better than duplicating logic on the client
       availableBets: {
         blue: [],
         green: [],
@@ -33,6 +34,7 @@ const state = {
     viewState: {
       pyramidHidden: false,
       savedDice: [],
+      legModalLeaving: false,
     },
   },
   private: {
@@ -44,6 +46,8 @@ const state = {
     longTermFirsts: [],
     longTermLasts: [],
     idToCash: {},
+    rollers: [],
+    legOver: false,
   },
 };
 
@@ -70,9 +74,10 @@ const initializeGameState = () => {
       height,
     };
   });
+  updateCamelPlacing();
 
   state.private.playerTurn = -1;  // increments before starting
-  
+
   initializeLeg();
 };
 
@@ -92,6 +97,8 @@ const initializeLeg = () => {
     yellow: null,
     white: null,
   };
+
+  state.private.rollers = [];
 
   state.public.viewState.savedDice = [];
 };
@@ -152,6 +159,7 @@ const sendStateToSocket = id => {
   state.private.idToSocket[id].emit('UPDATE', {
     ...state.public,
     privateState: privateStateForId(id),
+    legEndState: legEndStateForId(id),
   });
 };
 
@@ -169,6 +177,19 @@ const advanceCamel = camel => {
     state.public.gameState.camels[c].spot++;
     state.public.gameState.camels[c].height = nextSquareCamelCount + (state.public.gameState.camels[c].height - currentMovingCamelHeight);
   });
+
+  updateCamelPlacing();
+};
+
+const updateCamelPlacing = () => {
+  state.public.gameState.camelPlacing = Object.keys(state.public.gameState.camels).sort((a, b) => {
+    const [ camelA, camelB ] = [ state.public.gameState.camels[a], state.public.gameState.camels[b] ];
+    if (camelA.spot === camelB.spot) {
+      return camelB.height - camelA.height;
+    }
+
+    return camelB.spot - camelA.spot;
+  });
 };
 
 const nextTurn = () => {
@@ -177,6 +198,45 @@ const nextTurn = () => {
   state.public.message = `It's ${state.private.idToName[state.private.turnOrder[state.private.playerTurn]]}'s turn!`;
   state.private.turnReady = true;
   broadcastState();
+};
+
+const endLeg = async () => {
+  state.private.legOver = true;
+  state.public.viewState.legModalLeaving = false;
+  broadcastState();
+
+  await sleep(5000);
+
+  state.private.turnOrder.forEach(id => {
+    const legEndState = legEndStateForId(id);
+    state.private.idToCash[id] += legEndState.rollCash;
+  });
+
+  state.public.viewState.legModalLeaving = true;
+  broadcastState();
+
+  await sleep(1000);
+
+  state.private.legOver = false;
+  state.public.viewState.savedDice = [];  // fly the dice back into the pyramid before resetting the leg
+  broadcastState();
+
+  await sleep(1000);
+
+  initializeLeg();
+  broadcastState();
+  await sleep(1000);
+};
+
+const legEndStateForId = id => {
+  if (!state.private.legOver) {
+    return null;
+  }
+
+  return {
+    rollCash: state.private.rollers.filter(roller => roller === id).length,
+    legModalLeaving: state.public.viewState.legModalLeaving,
+  };
 };
 
 io.on('connection', socket => {
@@ -197,6 +257,8 @@ io.on('connection', socket => {
     if (!isPlayersTurn(id)) {
       return;
     }
+
+    state.private.rollers.push(id);
 
     const eligibleDice = Object.keys(state.public.gameState.dice).filter(d => state.public.gameState.dice[d] === null);
     const rolledDie = shuffle(eligibleDice)[0];
@@ -233,9 +295,11 @@ io.on('connection', socket => {
 
     // TODO grant a coin to the player (provisional?)
 
-    // TODO oasis / mirage (and coin rewards!)
+    // TODO oasis / mirage (and coin rewards!). updateCamelPlacing
 
-    // TODO what if leg is over?
+    if (Object.values(state.public.gameState.dice).filter(d => d === null).length === 0) {
+      await endLeg();
+    }
 
     nextTurn();
   });

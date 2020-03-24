@@ -19,14 +19,7 @@ const getCamel = color => {
 function CamelPlacing() {
   const { state } = useContext(CamelContext);
 
-  const rankedCamels = Object.keys(state.gameState.camels).sort((a, b) => {
-    const [ camelA, camelB ] = [ state.gameState.camels[a], state.gameState.camels[b] ];
-    if (camelA.spot === camelB.spot) {
-      return camelB.height - camelA.height;
-    }
-
-    return camelB.spot - camelA.spot;
-  });
+  const rankedCamels = state.gameState.camelPlacing;
 
   return (
     <div className="CamelPlacing">

@@ -496,6 +496,13 @@
   color: black;
   padding: 50px;
   border-radius: 10px;
+
+  transition: opacity 0.5s;  
+}
+
+.LegEndModal.hidden {
+  pointer-events: none;
+  opacity: 0;
 }
 
 .LegEndModalInner {
@@ -543,8 +550,16 @@
 
 .MyTray .message {
   font-size: 24pt;
+  flex: 4;
+}
+
+.MyTray .cash {
+  flex: 1;
+  font-size: 24pt;
 }
 
 .MyTray .CamelPlacing {
   width: 30%;
+  flex: 2;
+  font-size: 8pt;
 }

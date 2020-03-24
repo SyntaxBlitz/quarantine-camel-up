@@ -10,6 +10,9 @@ function MyTray() {
       <div className="message">
         {state.message}
       </div>
+      <div className="cash">
+        ${state.privateState.cash}
+      </div>
       <CamelPlacing />
     </div>
   );

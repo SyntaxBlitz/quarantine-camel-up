@@ -21,7 +21,7 @@ function App() {
           ? <div className={`App ${state.privateState.myTurn ? 'MyTurn' : ''}`}>
               <MyTray />
               <GameBoard />
-              {/* <LegEndModal /> */}
+              <LegEndModal />
             </div>
           : <div className="Registration">
             name? <input onChange={e => {
