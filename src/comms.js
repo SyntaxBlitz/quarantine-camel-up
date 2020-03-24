@@ -7,6 +7,7 @@ const setDispatch = d => dispatch = d;
 // we're just gonna let it throw if this isn't initialized down the road
 let socket = null;
 
+// TODO load from localstorage
 const id = uuid();
 
 const connect = () => {
@@ -16,6 +17,7 @@ const connect = () => {
   });
 
   socket.on('UPDATE', newState => {
+    console.log(newState);
     dispatch({
       type: 'SET_ENTIRE_STATE', // hey, you wanna fight me? come fight me. oh, wait, you can't, because you're NOT ALLOWED OUT OF THE HOUSE.
       newState,
@@ -34,8 +36,16 @@ window.startGame = () => {
   socket.emit('START_GAME');
 };
 
+// let the server take care of rejecting if it's not my turn
+const roll = () => {
+  socket.emit('ROLL', {
+    id,
+  });
+};
+
 export {
   setDispatch,
   connect,
   setName,
+  roll,
 };

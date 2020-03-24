@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CamelContext } from './CamelContext';
 
 function MyTray() {
+  const { state } = useContext(CamelContext);
+
   return (
     <div className="MyTray">
-      asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />asdf<br />
+      {state.message}
     </div>
   );
 }

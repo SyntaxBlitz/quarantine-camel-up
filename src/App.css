@@ -244,6 +244,8 @@
   transform-origin: bottom center;
   /* border: 10px solid black;
   opacity: 0.2; */
+  /* honestly could not tell you why but this renders in front of the camels if I have it at 100% */
+  opacity: 0.9999;
   transition: transform 0.25s, opacity 3s ease-in-out;
 }
 

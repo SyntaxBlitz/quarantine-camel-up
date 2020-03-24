@@ -75,15 +75,13 @@ function App() {
     <CamelContext.Provider value={{ state, dispatch }}>
       {
         state.gameStarted
-          ? <div className={`App ${state.gameState.myTurn ? 'MyTurn' : ''}`}>
+          ? <div className={`App ${state.privateState.myTurn ? 'MyTurn' : ''}`}>
               <MyTray />
               <GameBoard />
             </div>
           : <div className="Registration">
-            name? <input onKeyDown={e => {
-              if (e.keyCode === 13) {
-                setName(e.target.value);
-              }
+            name? <input onChange={e => {
+              setName(e.target.value);
             }} />
           </div>
       }

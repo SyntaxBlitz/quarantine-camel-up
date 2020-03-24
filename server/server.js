@@ -62,7 +62,7 @@ const roll = () => {
 
 const initializeGameState = () => {
   shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
-    const spot = roll();
+    const spot = roll() * 3;
     const height = Object.values(state.public.gameState.camels).map(c => c === null ? 0 : (c.spot === spot ? 1 : 0)).reduce((a, b) => a + b);
     
     state.public.gameState.camels[camel] = {
@@ -156,16 +156,18 @@ const sendStateToSocket = id => {
 };
 
 const advanceCamel = camel => {
-  const stackedCamels = Object.keys(state.public.camels).filter(
-    c => state.public.camels[c].spot === state.public.camels[camel].spot
-      && state.public.camels[c].height >= state.public.camels[camel].height
+  const stackedCamels = Object.keys(state.public.gameState.camels).filter(
+    c => state.public.gameState.camels[c].spot === state.public.gameState.camels[camel].spot
+      && state.public.gameState.camels[c].height >= state.public.gameState.camels[camel].height
   );
 
-  const nextSquareCamelCount = Object.values(state.public.camels).filter(c => c.spot === state.public.camels[camel].spot + 1).length;
+  const nextSquareCamelCount = Object.values(state.public.gameState.camels).filter(c => c.spot === state.public.gameState.camels[camel].spot + 1).length;
+
+  const currentMovingCamelHeight = state.public.gameState.camels[camel].height;
 
   stackedCamels.forEach(c => {
-    state.public.camels[c].spot++;
-    state.public.camels[c].height += nextSquareCamelCount;
+    state.public.gameState.camels[c].spot++;
+    state.public.gameState.camels[c].height = nextSquareCamelCount + (state.public.gameState.camels[c].height - currentMovingCamelHeight);
   });
 };
 
@@ -174,6 +176,7 @@ const nextTurn = () => {
   state.private.playerTurn %= state.private.turnOrder.length;
   state.public.message = `It's ${state.private.idToName[state.private.turnOrder[state.private.playerTurn]]}'s turn!`;
   state.private.turnReady = true;
+  broadcastState();
 };
 
 io.on('connection', socket => {
@@ -195,7 +198,7 @@ io.on('connection', socket => {
       return;
     }
 
-    const eligibleDice = Object.keys(state.gameState.dice).filter(d => state.gameState.dice[d] === null);
+    const eligibleDice = Object.keys(state.public.gameState.dice).filter(d => state.public.gameState.dice[d] === null);
     const rolledDie = shuffle(eligibleDice)[0];
     const dieValue = roll();
 
@@ -218,11 +221,12 @@ io.on('connection', socket => {
 
     state.public.message = '';
     state.public.viewState.pyramidHidden = false;
-    state.public.gameState.savedDice.push(rolledDie);
+    state.public.viewState.savedDice.push(rolledDie);
     broadcastState();
 
     for (let i = 0; i < dieValue; i++) {
       advanceCamel(rolledDie);
+      broadcastState();
       // TODO spot 17
       await sleep(1000);
     }
