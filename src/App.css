@@ -84,6 +84,7 @@
   width: 12%;
   transform: translate3d(-50%, -50%, 26px) rotateX(-70deg);
   transition: top 1s, left 1s;
+  transform-style: preserve-3d;
 }
 
 .camel-y-offset {
