@@ -2,17 +2,17 @@ import React, { useContext } from 'react';
 import { CamelContext } from './CamelContext';
 import CamelPlacing from './CamelPlacing.react';
 
-function MyTray() {
+function LegEndModal() {
   const { state } = useContext(CamelContext);
 
   return (
-    <div className="MyTray">
-      <div className="message">
-        {state.message}
+    <div className="LegEndModal">
+      <div className="LegEndModalInner">
+        <h1>End of leg</h1>
+        <CamelPlacing />
       </div>
-      <CamelPlacing />
     </div>
   );
 }
 
-export default MyTray;
+export default LegEndModal;

@@ -482,3 +482,69 @@
 .Camels {
   position: absolute;
 }
+
+.LegEndModal {
+  position: fixed;
+  z-index: 1000;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: rgba(255, 255, 255, 0.95);
+  color: black;
+  padding: 50px;
+  border-radius: 10px;
+}
+
+.LegEndModalInner {
+  overflow: auto;
+}
+
+.CamelPlacingOrdinals {
+  display: flex;
+}
+
+.CamelPlacingCamels {
+  position: relative;
+}
+
+.camel-col-placeholder {
+  width: 18%;
+  padding: 0 1%;
+  visibility: hidden;
+}
+
+.camel-col {
+  width: 18%;
+  padding: 0 1%;
+  position: absolute;
+  top: 0;
+
+  transition: transform 0.5s;
+}
+
+.CamelPlacing .col {
+  width: 20%;
+  text-align: center;
+}
+
+.CamelPlacing img {
+  width: 100%;
+}
+
+.MyTray {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+}
+
+.MyTray .message {
+  font-size: 24pt;
+}
+
+.MyTray .CamelPlacing {
+  width: 30%;
+}

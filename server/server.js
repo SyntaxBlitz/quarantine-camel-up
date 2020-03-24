@@ -62,7 +62,7 @@ const roll = () => {
 
 const initializeGameState = () => {
   shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
-    const spot = roll() * 3;
+    const spot = roll();
     const height = Object.values(state.public.gameState.camels).map(c => c === null ? 0 : (c.spot === spot ? 1 : 0)).reduce((a, b) => a + b);
     
     state.public.gameState.camels[camel] = {
@@ -233,7 +233,7 @@ io.on('connection', socket => {
 
     // TODO grant a coin to the player (provisional?)
 
-    // TODO oasis / mirage
+    // TODO oasis / mirage (and coin rewards!)
 
     // TODO what if leg is over?
 
