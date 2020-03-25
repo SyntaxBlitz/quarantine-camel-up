@@ -18,7 +18,6 @@ function App() {
   // mirages / oases
   // long-term bets/endgame
   // tooltip
-  // use Object.entries lol
   // fix for observers
 
   return (
