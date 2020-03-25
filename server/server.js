@@ -48,6 +48,13 @@ const state = {
     idToCash: {},
     rollers: [],
     legOver: false,
+    placedBets: {
+      blue: [],
+      green: [],
+      orange: [],
+      yellow: [],
+      white: [],
+    },
   },
 };
 
@@ -81,14 +88,25 @@ const initializeGameState = () => {
   initializeLeg();
 };
 
-const initializeLeg = () => {
+const updateAvailableBets = () => {
   state.public.gameState.availableBets = {
-    blue: [ 2, 3, 5 ],
-    green: [ 2, 3, 5 ],
-    orange: [ 2, 3, 5 ],
-    yellow: [ 2, 3, 5 ],
-    white: [ 2, 3, 5 ],
+    blue: [ 2, 3, 5 ].filter((_, i) => i < 3 - state.private.placedBets.blue.length),
+    green: [ 2, 3, 5 ].filter((_, i) => i < 3 - state.private.placedBets.green.length),
+    orange: [ 2, 3, 5 ].filter((_, i) => i < 3 - state.private.placedBets.orange.length),
+    yellow: [ 2, 3, 5 ].filter((_, i) => i < 3 - state.private.placedBets.yellow.length),
+    white: [ 2, 3, 5 ].filter((_, i) => i < 3 - state.private.placedBets.white.length),
   };
+};
+
+const initializeLeg = () => {
+  state.private.placedBets = {
+    blue: [],
+    green: [],
+    orange: [],
+    yellow: [],
+    white: [],
+  };
+  updateAvailableBets();
 
   state.public.gameState.dice = {
     blue: null,
@@ -113,6 +131,14 @@ const privateStateForId = id => {
         && !state.private.longTermLasts.some(bet => bet.id === id && bet.color === c),
     ),
     cash: state.private.idToCash[id],
+    placedBets: Object.fromEntries(Object.keys(state.private.placedBets).map(color => [
+      color,
+      // I don't own a towel
+      state.private.placedBets[color].map((id, i) => ({
+        id,
+        value: [ 5, 3, 2 ][i],
+      })).filter(o => o.id === id).map(o => o.value),
+    ])),
   };
 };
 
@@ -205,11 +231,16 @@ const endLeg = async () => {
   state.public.viewState.legModalLeaving = false;
   broadcastState();
 
-  await sleep(5000);
+  await sleep(10000);
 
   state.private.turnOrder.forEach(id => {
     const legEndState = legEndStateForId(id);
-    state.private.idToCash[id] += legEndState.rollCash;
+    state.private.idToCash[id] +=
+      legEndState.rollCash
+      + legEndState.shortTermBets.map(
+          colorSummary =>
+            colorSummary.winnings.reduce((a, b) => a + b, 0)
+        ).reduce((a, b) => a + b);
   });
 
   state.public.viewState.legModalLeaving = true;
@@ -235,6 +266,18 @@ const legEndStateForId = id => {
 
   return {
     rollCash: state.private.rollers.filter(roller => roller === id).length,
+    // you're allowed to hate me for the following code
+    shortTermBets: Object.keys(state.private.placedBets).map(color => ({
+      color,
+      winnings: state.private.placedBets[color].map((id, i) => ({
+        id,
+        value: state.public.gameState.camelPlacing[0] === color
+          ? [ 5, 3, 2 ][i]
+          : state.public.gameState.camelPlacing[1] === color
+            ? 1
+            : -1,
+      })).filter(o => o.id === id).map(o => o.value),
+    })),
     legModalLeaving: state.public.viewState.legModalLeaving,
   };
 };
@@ -293,13 +336,36 @@ io.on('connection', socket => {
       await sleep(1000);
     }
 
-    // TODO grant a coin to the player (provisional?)
-
     // TODO oasis / mirage (and coin rewards!). updateCamelPlacing
 
     if (Object.values(state.public.gameState.dice).filter(d => d === null).length === 0) {
       await endLeg();
     }
+
+    nextTurn();
+  });
+
+  socket.on('SHORT_TERM_BET', async ({ id, color }) => {
+    if (!isPlayersTurn(id)) {
+      return;
+    }
+
+    if (state.public.gameState.availableBets[color].length === 0) {
+      // don't think this is possible without a hacked client bc of the previous gate
+      // unless, ig, it's the _next_ player's turn and the delay from the turn being taken wasn't enough for a sync
+      // hmm or if the next player is spam-clicking... anyway we have this gate here even though a hacked client can still cheat/crash the server
+      return;
+    }
+
+    state.private.turnReady = false;
+    state.private.placedBets[color].push(id);
+    updateAvailableBets();
+
+    state.public.message = `${state.private.idToName[id]} has placed a short-term bet on the ${color} camel!`;
+
+    broadcastState();
+
+    await sleep(2000);
 
     nextTurn();
   });

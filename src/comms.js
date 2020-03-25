@@ -43,9 +43,17 @@ const roll = () => {
   });
 };
 
+const placeShortTermBet = color => {
+  socket.emit('SHORT_TERM_BET', {
+    id,
+    color,
+  });
+};
+
 export {
   setDispatch,
   connect,
   setName,
   roll,
+  placeShortTermBet,
 };

@@ -14,6 +14,13 @@ function App() {
     connect();
   }, [ dispatch ]);
 
+  // todo:
+  // mirages / oases
+  // long-term bets/endgame
+  // tooltip
+  // use Object.entries lol
+  // fix for observers
+
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
       {

@@ -16,10 +16,8 @@ const getCamel = color => {
   }[color];
 };
 
-function CamelPlacing() {
+function CamelPlacing(props) {
   const { state } = useContext(CamelContext);
-
-  const rankedCamels = state.gameState.camelPlacing;
 
   return (
     <div className="CamelPlacing">
@@ -28,9 +26,10 @@ function CamelPlacing() {
           <img src={blueCamel} />
         </div>
         {Object.keys(state.gameState.camels).map(
-          // I should've been able to just render in the order of rankedCamels but key wasn't working for the transition :(
+          // I should've been able to just render in the order of state.gameState.camelPlacing but key wasn't working for the transition :(
           (color) =>
-            <div className="camel-col" key={color} style={{ transform: `translateX(calc(100% * ${rankedCamels.indexOf(color)}))` }}>
+            <div className="camel-col" key={color} style={{ transform: `translateX(calc(100% * ${state.gameState.camelPlacing.indexOf(color)}))` }}>
+              <div className="placed-bets">{props.showBets && state.privateState.placedBets[color].map(v => '$' + v).join(', ')}</div>
               <img src={getCamel(color)} alt={color} /> { /* I see you alok */ }
             </div>
         )}

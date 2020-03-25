@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { CamelContext } from './CamelContext';
+import { placeShortTermBet } from './comms';
 
 import blueBet2 from './images/bet-blue-2.png';
 import blueBet3 from './images/bet-blue-3.png';
@@ -43,7 +44,7 @@ const getCard = color => coins => {
     white: {
       2: whiteBet2,
       3: whiteBet3,
-      5: whiteBet5,
+      5: whiteBet5,placeShortTermBet
     }[coins],
   }[color];
 };
@@ -52,7 +53,7 @@ function BetCardStack(props) {
   const { state } = useContext(CamelContext);
 
   return (
-    <div className={`BetCardStack ${props.color}`}>
+    <div className={`BetCardStack ${props.color}`} onClick={() => placeShortTermBet(props.color)}>
       <img src={getCard(props.color)(2)} className={`bet-value-2 ${state.gameState.availableBets[props.color].includes(2) ? '' : 'hidden'}`} />
       <img src={getCard(props.color)(3)} className={`bet-value-3 ${state.gameState.availableBets[props.color].includes(3) ? '' : 'hidden'}`} />
       <img src={getCard(props.color)(5)} className={`bet-value-5 ${state.gameState.availableBets[props.color].includes(5) ? '' : 'hidden'}`} />

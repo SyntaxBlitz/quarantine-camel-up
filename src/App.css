@@ -560,6 +560,12 @@
 
 .MyTray .CamelPlacing {
   width: 30%;
-  flex: 2;
+  flex: 3;
   font-size: 8pt;
+}
+
+.placed-bets {
+  height: 11pt;
+  font-size: 11pt;
+  text-align: center;
 }

@@ -9,6 +9,15 @@ const renderRows = legEndState => {
 
   return <>
     {legEndState.rollCash > 0 ? 'Rolls: $' + legEndState.rollCash + ' earned' : ''}
+    {legEndState.shortTermBets.map(
+      colorSummary =>
+        colorSummary.winnings.length > 0
+        ? <div>
+            {colorSummary.color}:{' '}
+            {colorSummary.winnings.map(winning => winning < 0 ? '-$' + -winning : '$' + winning).join(', ')}
+          </div>
+        : null
+    )}
   </>
 };
 

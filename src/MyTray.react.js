@@ -13,7 +13,7 @@ function MyTray() {
       <div className="cash">
         ${state.privateState.cash}
       </div>
-      <CamelPlacing />
+      <CamelPlacing showBets={true} />
     </div>
   );
 }
