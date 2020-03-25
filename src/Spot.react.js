@@ -14,11 +14,13 @@ function Spot(props) {
   // not spot 1
   // not already placed
   // none on this spot
+  // none on adjacent spots
   // no camels on this spot
   const enabled =
     state.privateState.myTurn
     && localState.placingMirageOasisFor === null
     && props.spot !== 1
+    && true
     && true
     && true
     && !Object.values(state.gameState.camels).some(c => c.spot === props.spot);
