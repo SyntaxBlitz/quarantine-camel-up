@@ -62,16 +62,28 @@
   align-items: center;
   font-weight: bold;
   font-size: 72pt;
-  opacity: 0;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 10px;
 
-  transition: opacity 0.25s;
+  transition: background-color 0.25s;
   transform: translateZ(1px);
 }
 
 .MyTurn .Spot.enabled:hover {
-  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.Spot img {
+  position: absolute;
+  /* this is based on the space size so the cards aren't actually totally consistent but that's ok */
+  height: 70%;
+  transform: translateZ(10px);
+  border-radius: 5px;
+  transition: opacity 0.25s;
+}
+
+.Spot img.hidden {
+  opacity: 0;
 }
 
 .Camels {

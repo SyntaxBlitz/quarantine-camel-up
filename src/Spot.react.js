@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { CamelContext } from './CamelContext';
 import { LocalContext } from './LocalContext';
+import mirage from './images/mirage.png';
+import oasis from './images/oasis.png';
 
 function Spot(props) {
   const { state } = useContext(CamelContext);
@@ -20,9 +22,10 @@ function Spot(props) {
     state.privateState.myTurn
     && localState.placingMirageOasisFor === null
     && props.spot !== 1
-    && true
-    && true
-    && true
+    && state.privateState.mirageOasisAvailable
+    && !state.gameState.mirageOasisSpots[props.spot - 1]
+    && !state.gameState.mirageOasisSpots[props.spot]
+    && !state.gameState.mirageOasisSpots[props.spot + 1]
     && !Object.values(state.gameState.camels).some(c => c.spot === props.spot);
 
   const openMirageOasisDialog = enabled ? () => {
@@ -34,7 +37,8 @@ function Spot(props) {
 
   return (
     <div className={`Spot spot-${props.spot} ${enabled ? 'enabled' : ''}`} onClick={openMirageOasisDialog}>
-      {/* {props.spot} */}
+      <img src={mirage} className={state.gameState.mirageOasisSpots[props.spot] !== 'mirage' && 'hidden'} />
+      <img src={oasis} className={state.gameState.mirageOasisSpots[props.spot] !== 'oasis' && 'hidden'} />
     </div>
   );
 }

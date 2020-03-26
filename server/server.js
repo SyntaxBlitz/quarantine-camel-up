@@ -30,6 +30,7 @@ const state = {
         yellow: [],
         white: [],
       },
+      mirageOasisSpots: {},
     },
     viewState: {
       pyramidHidden: false,
@@ -55,6 +56,7 @@ const state = {
       yellow: [],
       white: [],
     },
+    idToMirageOasis: {},
   },
 };
 
@@ -98,6 +100,12 @@ const updateAvailableBets = () => {
   };
 };
 
+const updateMirageOasisSpots = () => {
+  state.public.gameState.mirageOasisSpots = Object.fromEntries(
+    Object.values(state.private.idToMirageOasis).map(({ spot, type }) => [ spot, type ]),
+  );
+};
+
 const initializeLeg = () => {
   state.private.placedBets = {
     blue: [],
@@ -119,6 +127,9 @@ const initializeLeg = () => {
   state.private.rollers = [];
 
   state.public.viewState.savedDice = [];
+
+  state.private.idToMirageOasis = {};
+  updateMirageOasisSpots();
 };
 
 const isPlayersTurn = id => state.private.turnOrder[state.private.playerTurn] === id && state.private.turnReady;
@@ -139,6 +150,7 @@ const privateStateForId = id => {
         value: [ 5, 3, 2 ][i],
       })).filter(o => o.id === id).map(o => o.value),
     ])),
+    mirageOasisAvailable: !state.private.idToMirageOasis[id],
   };
 };
 
@@ -362,6 +374,46 @@ io.on('connection', socket => {
     updateAvailableBets();
 
     state.public.message = `${state.private.idToName[id]} has placed a short-term bet on the ${color} camel!`;
+
+    broadcastState();
+
+    await sleep(2000);
+
+    nextTurn();
+  });
+
+  socket.on('PLACE_MIRAGE_OASIS', async ({ id, spot, type }) => {
+    if (!isPlayersTurn(id)) {
+      return;
+    }
+
+    // duplicating this logic on the server to double-check
+    if (!!state.private.idToMirageOasis[id]) {
+      return;
+    }
+
+    if (spot === 1) {
+      return;
+    }
+
+    if (!!state.public.gameState.mirageOasisSpots[spot]) {
+      return;
+    }
+
+    // no need to explicitly check the edges
+    if (!!state.public.gameState.mirageOasisSpots[spot + 1] || state.public.gameState.mirageOasisSpots[spot - 1]) {
+      return;
+    }
+
+    if (Object.values(state.public.gameState.camels).some(c => c.spot === spot)) {
+      return;
+    }
+
+    state.private.turnReady = false;
+    state.private.idToMirageOasis[id] = { spot, type };
+    updateMirageOasisSpots();
+
+    state.public.message = `${state.private.idToName[id]} has placed a${{ mirage: '', oasis: 'n' }[type]} ${type} on the board!`;
 
     broadcastState();
 

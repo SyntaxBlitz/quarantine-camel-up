@@ -15,7 +15,7 @@ const reducer = (state, action) => {
       placingMirageOasisFor: action.spot,
     }),
 
-    'CLOSE_MIRAGE_OASIS_DIALOG': (state, action) => ({
+    'CLOSE_MIRAGE_OASIS_DIALOG': state => ({
       ...state,
       placingMirageOasisFor: null,
     }),

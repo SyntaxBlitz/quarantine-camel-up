@@ -24,6 +24,7 @@ function App() {
   // tooltip
   // fix for observers
   // images
+  // not sure this is really worth, but: prevent placing mirage/oasis before the last-place camel?
 
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
