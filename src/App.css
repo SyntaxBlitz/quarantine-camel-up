@@ -3,6 +3,11 @@
   width: 720px;
   position: relative;
   perspective: 900px;
+  transition: opacity 1s;
+}
+
+.GameBoardContainer.hidden {
+  opacity: 0;
 }
 
 .GameBoard {
@@ -421,6 +426,12 @@
   left: calc(18.5% + 20.75% / 2);
 }
 
+/* pseudo-spot */
+.camel-spot-17 {
+  top: calc(0% + 20% / 2);
+  left: calc(39.25% + 21% / 2);
+}
+
 .camel-spot-1 {
   top: calc(0% + 20% / 2);
   left: calc(39.25% + 21% / 2);
@@ -651,4 +662,8 @@
 .BackdropFilter.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+.GameEndScreen {
+  position: absolute;
 }

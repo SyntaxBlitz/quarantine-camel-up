@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import BaseBoard from './BaseBoard.react';
 import Track from './Track.react';
 import Dice from './Dice.react';
 import BetCards from './BetCards.react';
 import TopButtons from './TopButtons.react';
+import { CamelContext } from './CamelContext';
 
 const getStyles = rotates => ({
   transform: `translateZ(-400px) translateY(-600px) rotateX(${rotates.x}deg) rotateZ(${rotates.z}deg)`,
@@ -11,6 +12,7 @@ const getStyles = rotates => ({
 
 function GameBoard() {
   const [rotates, setRotates] = useState({ x: 30, z: 0 });
+  const { state } = useContext(CamelContext);
 
   useEffect(() => {
     window.onmousemove = e => {
@@ -27,7 +29,7 @@ function GameBoard() {
   }, [setRotates]);
 
   return (
-    <div className="GameBoardContainer">
+    <div className={`GameBoardContainer ${state.endGameReveal ? 'hidden' : ''}`}>
       <div className="GameBoard" style={getStyles(rotates)}>
         <BaseBoard />
         <TopButtons />

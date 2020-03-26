@@ -57,6 +57,7 @@ const state = {
       white: [],
     },
     idToMirageOasis: {},
+    showingEndGame: false,
   },
 };
 
@@ -69,9 +70,9 @@ const shuffle = arr => {
   return arr;
 };
 
-const roll = () => {
-  return Math.floor(Math.random() * 3) + 1;
-};
+const roll = () => 10;
+  // return Math.floor(Math.random() * 3) + 1;
+// };
 
 const initializeGameState = () => {
   shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
@@ -198,6 +199,7 @@ const sendStateToSocket = id => {
     ...state.public,
     privateState: privateStateForId(id),
     legEndState: legEndStateForId(id),
+    endGameReveal: gameEndStateForId(id),
   });
 };
 
@@ -286,6 +288,11 @@ const endLeg = async () => {
 
   await sleep(1000);
 
+  if (gameOver()) {
+    endGame();
+    return;
+  }
+
   state.private.legOver = false;
   state.public.viewState.savedDice = [];  // fly the dice back into the pyramid before resetting the leg
   broadcastState();
@@ -330,6 +337,65 @@ const legEndStateForId = id => {
     + legEndState.mirageOasisCash;
 
   return legEndState;
+};
+
+const gameEndStateForId = id => {
+  if (!state.private.showingEndGame) {
+    return null;
+  }
+
+  // oh you are gonna LOVE this
+  const longTermReward = [ 8, 5, 3, 2 ];
+  let nextLongTermWinRewardIndex = 0;
+  let nextLongTermLossRewardIndex = 0;
+
+  const gameEndState = {
+    longTermFirsts: state.private.longTermFirsts.map(
+      ({ betId, color }) => ({
+        winnings: color === state.public.gameState.camelPlacing[0] ? longTermReward[nextLongTermWinRewardIndex] ? longTermReward[nextLongTermWinRewardIndex++] : 1 : -1,
+        color,
+        name: state.private.idToName[betId],
+        me: id === betId,
+        
+        betId, // we gotta REMOVE this for  s e c u r i t y  but need it for the below score calculation
+      }),
+    ),
+    longTermLasts: state.private.longTermFirsts.map(
+      ({ betId, color }) => ({
+        winnings: color === state.public.gameState.camelPlacing[4] ? longTermReward[nextLongTermLossRewardIndex] ? longTermReward[nextLongTermLossRewardIndex++] : 1 : -1,
+        color,
+        name: state.private.idToName[betId],
+        me: id === betId,
+        
+        betId,
+      }),
+    ),
+  };
+
+  gameEndState.ranking = state.private.turnOrder.map(
+    playerId => ({
+      cash: state.private.idToCash[playerId]
+        + gameEndState.longTermFirsts.filter(b => b.betId === playerId).map(b => b.winnings).reduce((a, b) => a + b, 0)
+        + gameEndState.longTermLasts.filter(b => b.betId === playerId).map(b => b.winnings).reduce((a, b) => a + b, 0),
+      name: state.private.idToName[playerId],
+      me: playerId === id,
+    }),
+  ).sort(
+    (a, b) => b.cash - a.cash,
+  );
+
+  gameEndState.longTermFirsts.forEach(o => delete o.betId);
+  gameEndState.longTermLasts.forEach(o => delete o.betId);
+
+  return gameEndState;
+};
+
+const gameOver = () => Object.values(state.public.gameState.camels).some(c => c.spot > 16);
+
+const endGame = () => {
+  state.private.showingEndGame = true;
+  state.public.message = 'The game is over!';
+  broadcastState();
 };
 
 io.on('connection', socket => {
@@ -382,17 +448,24 @@ io.on('connection', socket => {
     for (let i = 0; i < dieValue; i++) {
       advanceCamel(rolledDie);
       broadcastState();
-      // TODO spot 17
       await sleep(1000);
+      if (gameOver()) {
+        await sleep(2000); // let it sink in
+        break;
+      }
     }
 
     await checkMirageOasis(rolledDie);
 
-    if (Object.values(state.public.gameState.dice).filter(d => d === null).length === 0) {
-      await endLeg();
+    if (Object.values(state.public.gameState.dice).filter(d => d === null).length === 0
+      || gameOver()
+    ) {
+      await endLeg(); // also ends the game if necessary
     }
 
-    nextTurn();
+    if (!gameOver()) {
+      nextTurn();
+    }
   });
 
   socket.on('SHORT_TERM_BET', async ({ id, color }) => {
