@@ -31,6 +31,8 @@ const state = {
         white: [],
       },
       mirageOasisSpots: {},
+      longTermFirstCount: 0,
+      longTermLastCount: 0,
     },
     viewState: {
       pyramidHidden: false,
@@ -550,6 +552,9 @@ io.on('connection', socket => {
       id,
       color,
     });
+
+    state.public.gameState.longTermFirstCount = state.private.longTermFirsts.length;
+    state.public.gameState.longTermLastCount = state.private.longTermLasts.length;
 
     state.public.message = `${state.private.idToName[id]} has placed a long-term bet for ${type} place!`;
 

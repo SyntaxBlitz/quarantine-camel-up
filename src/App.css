@@ -34,7 +34,7 @@
   height: calc(100% - 40.75%);
 }
 
-.TopButtons div {
+.LongTermFirst, .LongTermLast {
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   width: 110px;
@@ -46,7 +46,9 @@
   transform: translate3d(-50%, -50%, 1px);
 }
 
-.MyTurn .TopButtons.enabled div:hover {
+/* .MyTurn is redundant now but /shrug */
+.MyTurn .TopButtons.enabled .LongTermFirst:hover,
+.MyTurn .TopButtons.enabled .LongTermLast:hover {
   opacity: 1;
 }
 
@@ -677,10 +679,6 @@
   position: absolute;
 }
 
-.LongTermBetDialog {
-
-}
-
 .camel-col {
   width: 18%;
   padding: 0 1%;
@@ -697,4 +695,31 @@
 
 .CamelPlacing img {
   width: 100%;
+}
+
+
+.LongTermFirstCount {
+  position: absolute;
+  font-size: 64px;
+  font-weight: bold;
+  transform: translate3d(-50%, -50%, 75px) rotateX(-90deg);
+  transition: top 1s, left 1s, font-size 1s;
+  text-shadow: 0px 0px 10px black;
+
+  top: 10%;
+  left: 11%;
+  color: white;
+}
+
+.LongTermLastCount {
+  position: absolute;
+  font-size: 64px;
+  font-weight: bold;
+  transform: translate3d(-50%, -50%, 75px) rotateX(-90deg);
+  transition: top 1s, left 1s, font-size 1s;
+  text-shadow: 0px 0px 10px black;
+
+  top: 10%;
+  left: 88%;
+  color: white;
 }

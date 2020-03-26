@@ -20,7 +20,9 @@ function TopButtons() {
   return (
     <div className={`TopButtons ${enabled ? 'enabled' : ''}`}>
       <div className="LongTermFirst" onClick={() => openLongTermBetDialog('first')}></div>
+      <div className="LongTermFirstCount">{state.gameState.longTermFirstCount > 0 ? state.gameState.longTermFirstCount : ''}</div>
       <div className="LongTermLast" onClick={() => openLongTermBetDialog('last')}></div>
+      <div className="LongTermLastCount">{state.gameState.longTermLastCount > 0 ? state.gameState.longTermLastCount : ''}</div>
     </div>
   );
 }
