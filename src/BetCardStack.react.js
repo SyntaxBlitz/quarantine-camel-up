@@ -44,7 +44,7 @@ const getCard = color => coins => {
     white: {
       2: whiteBet2,
       3: whiteBet3,
-      5: whiteBet5,placeShortTermBet
+      5: whiteBet5,
     }[coins],
   }[color];
 };

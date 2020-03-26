@@ -70,9 +70,7 @@ const shuffle = arr => {
   return arr;
 };
 
-const roll = () => 10;
-  // return Math.floor(Math.random() * 3) + 1;
-// };
+const roll = () => Math.floor(Math.random() * 3) + 1;
 
 const initializeGameState = () => {
   shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
@@ -525,6 +523,37 @@ io.on('connection', socket => {
     updateMirageOasisSpots();
 
     state.public.message = `${state.private.idToName[id]} has placed a${{ mirage: '', oasis: 'n' }[type]} ${type} on the board!`;
+
+    broadcastState();
+
+    await sleep(2000);
+
+    nextTurn();
+  });
+
+  socket.on('PLACE_LONG_TERM_BET', async ({ id, type, color }) => {
+    if (!isPlayersTurn(id)) {
+      return;
+    }
+
+    const arr = {
+      first: state.private.longTermFirsts,
+      last: state.private.longTermLasts,
+    }[type];
+
+    if (arr.some(bet => bet.id === id && bet.color === color)) {
+      return;
+    }
+
+    state.private.turnReady = false;
+    arr.push({
+      id,
+      color,
+    });
+
+    state.public.message = `${state.private.idToName[id]} has placed a long-term bet for ${type} place!`;
+
+    await sleep(250); // hack to make sure the dialog fades out before the camel gets removed from the dialog
 
     broadcastState();
 

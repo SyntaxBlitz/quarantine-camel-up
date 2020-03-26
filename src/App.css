@@ -46,7 +46,7 @@
   transform: translate3d(-50%, -50%, 1px);
 }
 
-.MyTurn .TopButtons div:hover {
+.MyTurn .TopButtons.enabled div:hover {
   opacity: 1;
 }
 
@@ -574,6 +574,7 @@
 .MyTray .message {
   font-size: 24pt;
   flex: 4;
+  padding-right: 30px;
 }
 
 .MyTray .cash {
@@ -593,7 +594,7 @@
   text-align: center;
 }
 
-.MirageOasisDialog {
+.MirageOasisDialog, .LongTermBetDialog {
   position: fixed;
   z-index: 1000;
   width: 50%;
@@ -610,19 +611,27 @@
   transition: opacity 0.25s;
 }
 
-.MirageOasisDialog.hidden {
+.MirageOasisDialog.hidden, .LongTermBetDialog.hidden {
   pointer-events: none;
   opacity: 0;
 }
 
-.MirageOasisDialogInner {
+.MirageOasisDialogInner, .LongTermBetDialogInner {
   overflow: auto;
   width: 100%;
 }
 
-.MirageOasisDialogInner .choices {
+.MirageOasisDialogInner .choices, .LongTermBetDialog .choices {
   display: flex;
   justify-content: space-evenly;
+}
+
+.LongTermBetDialog h2 {
+  text-align: center;
+}
+
+.LongTermBetDialog img {
+  width: 15%;
 }
 
 .MirageOasisDialogInner img {
@@ -630,7 +639,7 @@
   border-radius: 10px;
 }
 
-.MirageOasisDialogInner .nevermind {
+.MirageOasisDialogInner .nevermind, .LongTermBetDialog .nevermind {
   width: 30%;
   text-align: center;
   margin: 50px auto 0;
@@ -642,7 +651,7 @@
   font-weight: bold;
 }
 
-.MirageOasisDialogInner .nevermind:hover {
+.MirageOasisDialogInner .nevermind:hover, .LongTermBetDialog .nevermind:hover {
   background-color: #ddd;
   cursor: pointer;
 }
@@ -666,4 +675,26 @@
 
 .GameEndScreen {
   position: absolute;
+}
+
+.LongTermBetDialog {
+
+}
+
+.camel-col {
+  width: 18%;
+  padding: 0 1%;
+  position: absolute;
+  top: 0;
+
+  transition: transform 0.5s;
+}
+
+.CamelPlacing .col {
+  width: 20%;
+  text-align: center;
+}
+
+.CamelPlacing img {
+  width: 100%;
 }

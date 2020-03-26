@@ -58,6 +58,14 @@ const placeMirageOasis = type => spot => {
   });
 };
 
+const placeLongTermBet = type => color => {
+  socket.emit('PLACE_LONG_TERM_BET', {
+    id,
+    type,
+    color,
+  });
+};
+
 export {
   setDispatch,
   connect,
@@ -65,4 +73,5 @@ export {
   roll,
   placeShortTermBet,
   placeMirageOasis,
+  placeLongTermBet,
 };

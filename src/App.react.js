@@ -7,6 +7,7 @@ import GameBoard from './GameBoard.react';
 import GameEndScreen from './GameEndScreen.react';
 import LegEndModal from './LegEndModal.react';
 import MirageOasisDialog from './MirageOasisDialog.react';
+import LongTermBetDialog from './LongTermBetDialog.react';
 import { setDispatch, connect, setName } from './comms';
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
   // camel borders
   // not sure this is really worth, but: prevent placing mirage/oasis before the last-place camel?
   // better leg-end interface
+  //  backdropfilter
+  // click backdrop filters to exit dialogs
 
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
@@ -39,6 +42,7 @@ function App() {
                 <GameBoard />
                 <LegEndModal />
                 <MirageOasisDialog />
+                <LongTermBetDialog />
               </div>
             : <div className="Registration">
               name? <input onChange={e => {
