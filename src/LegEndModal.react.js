@@ -8,7 +8,17 @@ const renderRows = legEndState => {
   }
 
   return <>
-    {legEndState.rollCash > 0 ? 'Rolls: $' + legEndState.rollCash + ' earned' : ''}
+    {legEndState.rollCash > 0
+      ? <div>
+          Rolls: ${legEndState.rollCash} earned
+        </div>
+      : null}
+    {legEndState.mirageOasisCash > 0
+      ? <div>
+          {legEndState.mirageOasisType[0].toUpperCase()}{legEndState.mirageOasisType.substring(1)} earnings: ${legEndState.mirageOasisCash}
+        </div>
+      : null
+    }
     {legEndState.shortTermBets.map(
       colorSummary =>
         colorSummary.winnings.length > 0

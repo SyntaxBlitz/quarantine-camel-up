@@ -220,27 +220,29 @@ const advanceCamel = camel => {
 };
 
 const checkMirageOasis = async camel => {
-  // TODO coin rewards
+  const spot = state.public.gameState.camels[camel].spot;
 
-  const type = state.public.gameState.mirageOasisSpots[state.public.gameState.camels[camel].spot];
+  const type = state.public.gameState.mirageOasisSpots[spot];
 
   if (type === 'mirage') {
     const stackHeight = Math.max(...Object.values(state.public.gameState.camels).filter(
-      c => c.spot === state.public.gameState.camels[camel].spot
+      c => c.spot === spot
     ).map(c => c.height)) + 1;
 
     Object.values(state.public.gameState.camels).filter(
-      c => c.spot === state.public.gameState.camels[camel].spot - 1
+      c => c.spot === spot - 1
     ).forEach(c => c.height += stackHeight);
 
     Object.values(state.public.gameState.camels).filter(
-      c => c.spot === state.public.gameState.camels[camel].spot
+      c => c.spot === spot
     ).forEach(c => c.spot--);
   } else if (type === 'oasis') {
     advanceCamel(camel);
   } else {
     return;
   }
+
+  Object.values(state.private.idToMirageOasis).filter(mo => mo.spot === spot).forEach(mo => mo.earnings++);
 
   updateCamelPlacing();
   broadcastState();
@@ -276,12 +278,7 @@ const endLeg = async () => {
 
   state.private.turnOrder.forEach(id => {
     const legEndState = legEndStateForId(id);
-    state.private.idToCash[id] +=
-      legEndState.rollCash
-      + legEndState.shortTermBets.map(
-          colorSummary =>
-            colorSummary.winnings.reduce((a, b) => a + b, 0)
-        ).reduce((a, b) => a + b);
+    state.private.idToCash[id] += legEndState.totalWinnings;
   });
 
   state.public.viewState.legModalLeaving = true;
@@ -305,7 +302,7 @@ const legEndStateForId = id => {
     return null;
   }
 
-  return {
+  const legEndState = {
     rollCash: state.private.rollers.filter(roller => roller === id).length,
     // you're allowed to hate me for the following code
     shortTermBets: Object.keys(state.private.placedBets).map(color => ({
@@ -319,8 +316,20 @@ const legEndStateForId = id => {
             : -1,
       })).filter(o => o.id === id).map(o => o.value),
     })),
+    mirageOasisCash: state.private.idToMirageOasis[id] ? state.private.idToMirageOasis[id].earnings : 0,
+    mirageOasisType: state.private.idToMirageOasis[id] ? state.private.idToMirageOasis[id].type : null,
     legModalLeaving: state.public.viewState.legModalLeaving,
   };
+  
+  legEndState.totalWinnings =
+    legEndState.rollCash
+    + legEndState.shortTermBets.map(
+        colorSummary =>
+          colorSummary.winnings.reduce((a, b) => a + b, 0)
+      ).reduce((a, b) => a + b)
+    + legEndState.mirageOasisCash;
+
+  return legEndState;
 };
 
 io.on('connection', socket => {
@@ -439,7 +448,7 @@ io.on('connection', socket => {
     }
 
     state.private.turnReady = false;
-    state.private.idToMirageOasis[id] = { spot, type };
+    state.private.idToMirageOasis[id] = { spot, type, earnings: 0 };
     updateMirageOasisSpots();
 
     state.public.message = `${state.private.idToName[id]} has placed a${{ mirage: '', oasis: 'n' }[type]} ${type} on the board!`;
