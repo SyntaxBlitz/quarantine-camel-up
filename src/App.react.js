@@ -21,15 +21,15 @@ function App() {
   const [ localState, localDispatch ] = useReducer(localReducer, initialLocalState);
 
   // todo:
-  // long-term bets/endgame
   // tooltip
   // fix for observers
   // images
   // camel borders
   // not sure this is really worth, but: prevent placing mirage/oasis before the last-place camel?
-  // better leg-end interface
-  //  backdropfilter
+  // backdropfilter for leg-end modal
   // click backdrop filters to exit dialogs
+  // prettier name entry screen
+  // totals for the leg-end and game-end screens?
 
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
@@ -45,7 +45,8 @@ function App() {
                 <LongTermBetDialog />
               </div>
             : <div className="Registration">
-              name? <input onChange={e => {
+              <div>Name</div>
+              <input onChange={e => {
                 setName(e.target.value);
               }} />
             </div>

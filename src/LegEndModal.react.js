@@ -9,23 +9,27 @@ const renderRows = legEndState => {
 
   return <>
     {legEndState.rollCash > 0
-      ? <div>
-          Rolls: ${legEndState.rollCash} earned
+      ? <div className="leg-end-row">
+          <div className="flavor">Rolls</div>
+          <div className="earnings">${legEndState.rollCash}</div>
         </div>
       : null}
     {legEndState.mirageOasisCash > 0
-      ? <div>
-          {legEndState.mirageOasisType[0].toUpperCase()}{legEndState.mirageOasisType.substring(1)} earnings: ${legEndState.mirageOasisCash}
+      ? <div className="leg-end-row">
+          <div className="flavor">{legEndState.mirageOasisType[0].toUpperCase()}{legEndState.mirageOasisType.substring(1)} tile</div>
+          <div className="earnings">${legEndState.mirageOasisCash}</div>
         </div>
       : null
     }
     {legEndState.shortTermBets.map(
       colorSummary =>
         colorSummary.winnings.length > 0
-        ? <div>
-            {colorSummary.color}:{' '}
-            {colorSummary.winnings.map(winning => winning < 0 ? '-$' + -winning : '$' + winning).join(', ')}
-          </div>
+        ? colorSummary.winnings.map((winning, i) => 
+            <div className="leg-end-row">
+              <div className="flavor">{i == 0 ? <>Bet on {colorSummary.color}</> : null}</div>
+              <div className="earnings">{winning < 0 ? '-$' + -winning : '$' + winning}</div>
+            </div>
+          )
         : null
     )}
   </>

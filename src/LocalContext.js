@@ -9,6 +9,9 @@ const initialState = {
   // these two are split so we can keep rendering it as the dialog fades out
   longTermBetDialogShown: false,
   lastLongTermBettingOn: null,
+
+  includeLasts: 0,
+  includeFirsts: 0,
 };
 
 const reducer = (state, action) => {
@@ -32,6 +35,15 @@ const reducer = (state, action) => {
       ...state,
       longTermBetDialogShown: false,
     }),
+
+    'SET_INCLUDE_LASTS': (state, action) => ({
+      ...state,
+      includeLasts: action.index,
+    }),
+    'SET_INCLUDE_FIRSTS': (state, action) => ({
+      ...state,
+      includeFirsts: action.index,
+    })
   }[action.type];
 
   if (!handler) {

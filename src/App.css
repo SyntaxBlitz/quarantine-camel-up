@@ -534,6 +534,23 @@
   overflow: auto;
 }
 
+.LegEndModal .CamelPlacing {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.leg-end-row {
+  width: 80%;
+  margin: 10px auto;
+  display: flex;
+  font-size: 24pt;
+  justify-content: space-between;
+}
+
+.leg-end-row .earnings {
+  text-align: right;
+}
+
 .CamelPlacingOrdinals {
   display: flex;
 }
@@ -722,4 +739,90 @@
   top: 10%;
   left: 88%;
   color: white;
+}
+
+.slow-reveal {
+  transition: opacity 0.5s;
+}
+
+.slow-reveal.me {
+  color: #afa;
+}
+
+.slow-reveal.hidden {
+  opacity: 0;
+}
+
+.Lasts {
+  transition: opacity 0.25s;
+}
+
+.Lasts.hidden {
+  opacity: 0;
+}
+
+.Firsts {
+  transition: opacity 0.25s;
+}
+
+.Firsts.hidden {
+  opacity: 0;
+}
+
+.Final {
+  transition: opacity 0.25s;
+}
+
+.Final.hidden {
+  opacity: 0;
+}
+
+.GameEndScreen {
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.GameEndScreen h1 {
+  text-align: center;
+}
+
+.reveal-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18pt;
+}
+
+.ranking-row {
+  display: flex;
+  font-size: 36pt;
+  justify-content: space-between;
+  width: 40%;
+  margin: 40px auto;
+}
+
+.ranking-row .rank-name {
+  flex: 1;
+}
+
+.ranking-row .cash {
+  flex: 1;
+  text-align: right;
+}
+
+.Registration {
+  text-align: center;
+}
+
+.Registration div {
+  margin-top: 30vh;
+  margin-bottom: 40px;
+  font-size: 48pt;
+}
+
+.Registration input {
+  font-size: 36pt;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
 }

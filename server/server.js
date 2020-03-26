@@ -72,7 +72,8 @@ const shuffle = arr => {
   return arr;
 };
 
-const roll = () => Math.floor(Math.random() * 3) + 1;
+// const roll = () => Math.floor(Math.random() * 3) + 1;
+const roll = () => 10;
 
 const initializeGameState = () => {
   shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
@@ -351,7 +352,7 @@ const gameEndStateForId = id => {
 
   const gameEndState = {
     longTermFirsts: state.private.longTermFirsts.map(
-      ({ betId, color }) => ({
+      ({ id: betId, color }) => ({
         winnings: color === state.public.gameState.camelPlacing[0] ? longTermReward[nextLongTermWinRewardIndex] ? longTermReward[nextLongTermWinRewardIndex++] : 1 : -1,
         color,
         name: state.private.idToName[betId],
@@ -360,8 +361,8 @@ const gameEndStateForId = id => {
         betId, // we gotta REMOVE this for  s e c u r i t y  but need it for the below score calculation
       }),
     ),
-    longTermLasts: state.private.longTermFirsts.map(
-      ({ betId, color }) => ({
+    longTermLasts: state.private.longTermLasts.map(
+      ({ id: betId, color }) => ({
         winnings: color === state.public.gameState.camelPlacing[4] ? longTermReward[nextLongTermLossRewardIndex] ? longTermReward[nextLongTermLossRewardIndex++] : 1 : -1,
         color,
         name: state.private.idToName[betId],
