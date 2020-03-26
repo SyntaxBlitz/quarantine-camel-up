@@ -219,6 +219,35 @@ const advanceCamel = camel => {
   updateCamelPlacing();
 };
 
+const checkMirageOasis = async camel => {
+  // TODO coin rewards
+
+  const type = state.public.gameState.mirageOasisSpots[state.public.gameState.camels[camel].spot];
+
+  if (type === 'mirage') {
+    const stackHeight = Math.max(...Object.values(state.public.gameState.camels).filter(
+      c => c.spot === state.public.gameState.camels[camel].spot
+    ).map(c => c.height)) + 1;
+
+    Object.values(state.public.gameState.camels).filter(
+      c => c.spot === state.public.gameState.camels[camel].spot - 1
+    ).forEach(c => c.height += stackHeight);
+
+    Object.values(state.public.gameState.camels).filter(
+      c => c.spot === state.public.gameState.camels[camel].spot
+    ).forEach(c => c.spot--);
+  } else if (type === 'oasis') {
+    advanceCamel(camel);
+  } else {
+    return;
+  }
+
+  updateCamelPlacing();
+  broadcastState();
+
+  await sleep(1000);
+};
+
 const updateCamelPlacing = () => {
   state.public.gameState.camelPlacing = Object.keys(state.public.gameState.camels).sort((a, b) => {
     const [ camelA, camelB ] = [ state.public.gameState.camels[a], state.public.gameState.camels[b] ];
@@ -348,7 +377,7 @@ io.on('connection', socket => {
       await sleep(1000);
     }
 
-    // TODO oasis / mirage (and coin rewards!). updateCamelPlacing
+    await checkMirageOasis(rolledDie);
 
     if (Object.values(state.public.gameState.dice).filter(d => d === null).length === 0) {
       await endLeg();
