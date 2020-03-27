@@ -566,4 +566,9 @@ io.on('connection', socket => {
 
     nextTurn();
   });
+
+  // in case someone leaves
+  socket.on('SKIP_TURN', () => {
+    nextTurn();
+  });
 });

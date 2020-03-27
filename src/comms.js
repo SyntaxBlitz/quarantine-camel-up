@@ -38,6 +38,10 @@ window.startGame = () => {
   socket.emit('START_GAME');
 };
 
+window.skipTurn = () => {
+  socket.emit('SKIP_TURN');
+};
+
 // let the server take care of rejecting if it's not my turn
 const roll = () => {
   socket.emit('ROLL', {
