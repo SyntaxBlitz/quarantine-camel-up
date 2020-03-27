@@ -28,7 +28,6 @@ function App() {
   // backdropfilter for leg-end modal
   // click backdrop filters to exit dialogs
   // totals for the leg-end and game-end screens?
-  // fix overflow in leg-end screen
 
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
