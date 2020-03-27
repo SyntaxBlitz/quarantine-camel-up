@@ -8,7 +8,9 @@ const setDispatch = d => dispatch = d;
 let socket = null;
 
 // TODO load from localstorage
-const id = uuid();
+const localStorageId = window.localStorage.getItem('token');
+const id = localStorageId || uuid();
+try { window.localStorage.setItem('token', id); } catch (e) { /* too bad */ }
 
 const address = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3511/' : 'https://camel-server.1332.io/';
 

@@ -24,11 +24,11 @@ function App() {
   // tooltip
   // fix for observers
   // images
-  // camel borders
   // not sure this is really worth, but: prevent placing mirage/oasis before the last-place camel?
   // backdropfilter for leg-end modal
   // click backdrop filters to exit dialogs
   // totals for the leg-end and game-end screens?
+  // fix overflow in leg-end screen
 
   return (
     <CamelContext.Provider value={{ state, dispatch }}>
