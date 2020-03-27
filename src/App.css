@@ -83,10 +83,11 @@
 .Spot img {
   position: absolute;
   /* this is based on the space size so the cards aren't actually totally consistent but that's ok */
-  height: 70%;
+  width: 75%;
   transform: translateZ(10px);
-  border-radius: 5px;
+  border-radius: 10px;
   transition: opacity 0.25s;
+  border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 .Spot img.hidden {
@@ -656,7 +657,14 @@
 
 .MirageOasisDialogInner img {
   width: 200px; /* idk */
-  border-radius: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.25s;
+}
+
+.MirageOasisDialogInner img:hover {
+  opacity: 1;
 }
 
 .MirageOasisDialogInner .nevermind, .LongTermBetDialog .nevermind {
