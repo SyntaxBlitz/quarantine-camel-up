@@ -10,8 +10,10 @@ let socket = null;
 // TODO load from localstorage
 const id = uuid();
 
+const address = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3511/' : 'https://camel-server.1332.io/';
+
 const connect = () => {
-  socket = io('http://localhost:3511/');
+  socket = io(address);
   socket.emit('REGISTER_SOCKET', {
     id,
   });

@@ -28,7 +28,6 @@ function App() {
   // not sure this is really worth, but: prevent placing mirage/oasis before the last-place camel?
   // backdropfilter for leg-end modal
   // click backdrop filters to exit dialogs
-  // prettier name entry screen
   // totals for the leg-end and game-end screens?
 
   return (

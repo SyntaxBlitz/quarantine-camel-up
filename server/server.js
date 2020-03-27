@@ -72,8 +72,7 @@ const shuffle = arr => {
   return arr;
 };
 
-// const roll = () => Math.floor(Math.random() * 3) + 1;
-const roll = () => 10;
+const roll = () => Math.floor(Math.random() * 3) + 1;
 
 const initializeGameState = () => {
   shuffle(Object.keys(state.public.gameState.camels)).forEach(camel => {
