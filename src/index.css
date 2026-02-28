@@ -6,3 +6,8 @@ body {
   font-family: sans-serif;
   overflow-x: hidden;
 }
+
+* {
+  /* at some point chrome started matching firefox's brokenness */
+  transform-style: preserve-3d;
+}
